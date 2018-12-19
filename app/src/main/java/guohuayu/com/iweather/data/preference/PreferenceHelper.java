@@ -1,5 +1,6 @@
 package guohuayu.com.iweather.data.preference;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -50,6 +51,7 @@ public final class PreferenceHelper {
     }
 
     public static SharedPreferences getSharedPreferences() {
+        System.out.println(SETTINGS_FILENAME);
         return WeatherApplication.getInstance().getSharedPreferences(
                 SETTINGS_FILENAME, Context.MODE_PRIVATE);
     }

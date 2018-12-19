@@ -76,7 +76,7 @@ public class HomePagePresenter implements HomePageContract.Presenter{
         Subscription subscription = WeatherDataRepository.getWeather(context, cityId, weatherDao, refreshNow)
                 .compose(RxSchedulerUtils.normalSchedulersTransformer())
                 .subscribe(weatherView::displayWeatherInformation,throwable -> {
-                    Toast.makeText(context,throwable.getMessage(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,throwable.getMessage()+"test22222222222",Toast.LENGTH_SHORT).show();
                 });
         subscriptions.add(subscription);
     }

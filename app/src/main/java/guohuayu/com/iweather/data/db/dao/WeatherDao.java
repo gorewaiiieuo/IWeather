@@ -26,20 +26,20 @@ import guohuayu.com.iweather.data.db.entities.weatherEntities.WeatherLive;
 public class WeatherDao {
     private Context context;
 
-    private Dao<AirQuality, String> aqDaoOperation;
+    private Dao<AirQuality, String> aqiDaoOperation;
     private Dao<WeatherForecast, Long> forecastDaoOperation;
-    private Dao<LifeIndex, Long> lifeIndexDaoOperation;
-    private Dao<WeatherLive, String> liveDaoOperation;
+    private Dao<LifeIndex, Long> lifeIndexesDaoOperation;
+    private Dao<WeatherLive, String> realtimeDaoOperation;
     private Dao<Weather, String> weatherDaoOperation;
 
     @Inject
     WeatherDao(Context context) {
         this.context = context;
-        this.aqDaoOperation = aqDaoOperation;
-        this.forecastDaoOperation = forecastDaoOperation;
-        this.lifeIndexDaoOperation = lifeIndexDaoOperation;
-        this.liveDaoOperation = liveDaoOperation;
-        this.weatherDaoOperation = weatherDaoOperation;
+        this.aqiDaoOperation = WeatherDatabaseHelper.getInstance(context).getWeatherDao(AirQuality.class);
+        this.forecastDaoOperation = WeatherDatabaseHelper.getInstance(context).getWeatherDao(WeatherForecast.class);
+        this.lifeIndexesDaoOperation = WeatherDatabaseHelper.getInstance(context).getWeatherDao(LifeIndex.class);
+        this.realtimeDaoOperation = WeatherDatabaseHelper.getInstance(context).getWeatherDao(WeatherLive.class);
+        this.weatherDaoOperation = WeatherDatabaseHelper.getInstance(context).getWeatherDao(Weather.class);
     }
 
     //通过cityId查询weather
@@ -47,10 +47,10 @@ public class WeatherDao {
         return TransactionManager.callInTransaction(WeatherDatabaseHelper.getInstance(context).getConnectionSource(),() ->{//匿名函数
             Weather weather = weatherDaoOperation.queryForId(cityId);
             if(weather != null){
-                weather.setWeatherLive(liveDaoOperation.queryForId(cityId));
+                weather.setWeatherLive(realtimeDaoOperation.queryForId(cityId));
                 weather.setWeatherForecasts(forecastDaoOperation.queryForEq(WeatherForecast.CITY_ID_FIELD_NAME, cityId));
-                weather.setLifeIndexes(lifeIndexDaoOperation.queryForEq(WeatherForecast.CITY_ID_FIELD_NAME, cityId));
-                weather.setAirQuality(aqDaoOperation.queryForId(cityId));
+                weather.setLifeIndexes(lifeIndexesDaoOperation.queryForEq(WeatherForecast.CITY_ID_FIELD_NAME, cityId));
+                weather.setAirQuality(aqiDaoOperation.queryForId(cityId));
             }
             return weather;
         });
@@ -84,10 +84,10 @@ public class WeatherDao {
 
         for(Weather weather : weatherList){
             String cityId = weather.getCityId();
-            weather.setWeatherLive(liveDaoOperation.queryForId(cityId));
+            weather.setWeatherLive(realtimeDaoOperation.queryForId(cityId));
             weather.setWeatherForecasts(forecastDaoOperation.queryForEq(WeatherForecast.CITY_ID_FIELD_NAME, cityId));
-            weather.setLifeIndexes(lifeIndexDaoOperation.queryForEq(WeatherForecast.CITY_ID_FIELD_NAME, cityId));
-            weather.setAirQuality(aqDaoOperation.queryForId(cityId));
+            weather.setLifeIndexes(lifeIndexesDaoOperation.queryForEq(WeatherForecast.CITY_ID_FIELD_NAME, cityId));
+            weather.setAirQuality(aqiDaoOperation.queryForId(cityId));
         }
         return weatherList;
     }
@@ -97,12 +97,12 @@ public class WeatherDao {
         //为该weather对象在表中创建一个新行
         weatherDaoOperation.create(weather);
 
-        aqDaoOperation.create(weather.getAirQuality());
+        aqiDaoOperation.create(weather.getAirQuality());
 
-        liveDaoOperation.create(weather.getWeatherLive());
+        realtimeDaoOperation.create(weather.getWeatherLive());
 
         for(LifeIndex lifeIndex : weather.getLifeIndexes()){
-            lifeIndexDaoOperation.create(lifeIndex);
+            lifeIndexesDaoOperation.create(lifeIndex);
         }
 
         for (WeatherForecast forecast : weather.getWeatherForecasts()){
@@ -112,8 +112,8 @@ public class WeatherDao {
 
     private void updateWeather(Weather weather) throws SQLException {
         weatherDaoOperation.update(weather);
-        aqDaoOperation.update(weather.getAirQuality());
-        liveDaoOperation.update(weather.getWeatherLive());
+        aqiDaoOperation.update(weather.getAirQuality());
+        realtimeDaoOperation.update(weather.getWeatherLive());
 
         //先删除旧数据
         DeleteBuilder<WeatherForecast, Long> forecastDeleteBuilder = forecastDaoOperation.deleteBuilder();
@@ -126,13 +126,13 @@ public class WeatherDao {
         }
 
         //先删除旧数据
-        DeleteBuilder<LifeIndex, Long> indexDeleteBuilder = lifeIndexDaoOperation.deleteBuilder();
+        DeleteBuilder<LifeIndex, Long> indexDeleteBuilder = lifeIndexesDaoOperation.deleteBuilder();
         indexDeleteBuilder.where().eq(WeatherForecast.CITY_ID_FIELD_NAME, weather.getCityId());
         PreparedDelete<LifeIndex> indexPrepared = indexDeleteBuilder.prepare();
-        lifeIndexDaoOperation.delete(indexPrepared);
+        lifeIndexesDaoOperation.delete(indexPrepared);
         //插入新数据
         for (LifeIndex index : weather.getLifeIndexes()){
-            lifeIndexDaoOperation.create(index);
+            lifeIndexesDaoOperation.create(index);
         }
     }
 }

@@ -5,8 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import butterknife.BindView;
 import guohuayu.com.iweather.base.BaseRecyclerViewAdapter;
+import guohuayu.com.iweather.data.WeatherDetail;
 
 /**
  * Created by Administrator on 2018/12/17.
@@ -15,6 +18,12 @@ import guohuayu.com.iweather.base.BaseRecyclerViewAdapter;
  */
 
 public class DetailAdapter extends BaseRecyclerViewAdapter<DetailAdapter.ViewHolder>{
+    private List<WeatherDetail> details;
+
+    public DetailAdapter( List<WeatherDetail> details){
+        this.details = details;
+    }
+
     @NonNull
     @Override
     public DetailAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

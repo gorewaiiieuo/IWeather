@@ -9,6 +9,15 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="正在导入城市数据..."
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:indeterminate="true" />
 </android.support.constraint.ConstraintLayout>

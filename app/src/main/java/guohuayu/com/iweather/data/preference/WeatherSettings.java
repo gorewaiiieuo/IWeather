@@ -15,11 +15,11 @@ public enum WeatherSettings {
     private final Object mDefaultValue;
 
     public String getmId() {
-        return mId;
+        return this.mId;
     }
 
     public Object getmDefaultValue() {
-        return mDefaultValue;
+        return this.mDefaultValue;
     }
 
     WeatherSettings(String id, Object defaultValue){

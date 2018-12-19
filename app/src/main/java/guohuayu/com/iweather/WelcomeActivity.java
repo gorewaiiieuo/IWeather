@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.baronzhang.android.library.util.system.StatusBarHelper;
+
 import java.io.InvalidClassException;
 
 import guohuayu.com.iweather.data.db.CityDatabaseHelper;
@@ -24,7 +26,8 @@ public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome);
+//        setContentView(R.layout.activity_welcome);
+        StatusBarHelper.statusBarLightMode(this);
 
         Observable.just(initAppData())
                 .subscribeOn(Schedulers.io())
@@ -46,8 +49,8 @@ public class WelcomeActivity extends AppCompatActivity {
         //初次打开APP时预设一个当前城市
         if(PreferenceHelper.getSharedPreferences().getBoolean(WeatherSettings.SETTINGS_FIRST_USE.getmId(),false)){
             try {
+                PreferenceHelper.savePreference(WeatherSettings.SETTINGS_CURRENT_CITY_ID, "101020100");
                 PreferenceHelper.savePreference(WeatherSettings.SETTINGS_FIRST_USE, false);
-                PreferenceHelper.savePreference(WeatherSettings.SETTINGS_CURRENT_CITY_ID, "101040100");
             } catch (InvalidClassException e) {
                 e.printStackTrace();
             }

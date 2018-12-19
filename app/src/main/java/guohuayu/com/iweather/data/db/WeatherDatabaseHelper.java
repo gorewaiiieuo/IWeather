@@ -23,7 +23,7 @@ import guohuayu.com.iweather.data.db.entities.weatherEntities.WeatherLive;
  */
 
 public class WeatherDatabaseHelper extends OrmLiteSqliteOpenHelper{
-    private static final String DATABASE_NAME = "weather,db";
+    private static final String DATABASE_NAME = "weather.db";
     private static final int DATABASE_VERSION = 1;
 
     private static volatile WeatherDatabaseHelper instance;
@@ -57,15 +57,15 @@ public class WeatherDatabaseHelper extends OrmLiteSqliteOpenHelper{
 
             //创建一个触发器：删除weather表后，也删除另外4个表中与weather表中cityId相同的行
             //old表示weather表
-            String weatherTrigger = "create trigger trigger_delete After" +
-                    "delete on weather" +
-                    "for each row" +
-                    "Begin" +
-                    "delete from AirQuality where cityId = old.cityId" +
-                    "delete from LifeIndex where cityId = old.cityId" +
-                    "delete from WeatherForecast where cityId = old.cityId" +
-                    "delete from WeatherLive where cityId = old.cityId" +
-                    "End;";
+            String weatherTrigger =  "CREATE TRIGGER trigger_delete AFTER DELETE " +
+                    "ON Weather " +
+                    "FOR EACH ROW " +
+                    "BEGIN " +
+                    "DELETE FROM AirQuality WHERE cityId = OLD.cityId; " +
+                    "DELETE FROM WeatherLive WHERE cityId = OLD.cityId; " +
+                    "DELETE FROM WeatherForecast WHERE cityId = OLD.cityId; " +
+                    "DELETE FROM LifeIndex WHERE cityId = OLD.cityId; " +
+                    "END;";
             database.execSQL(weatherTrigger);
 
         } catch (SQLException e) {

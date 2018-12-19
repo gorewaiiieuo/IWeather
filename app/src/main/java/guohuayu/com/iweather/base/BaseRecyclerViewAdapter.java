@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 /**
- * 为recyclerView.adpater提供一个统一的父类，为其添加一个item点击监听器\
+ * 为recyclerView.adpater提供一个统一的父类，为其添加一个item点击监听器（是点击整个item的事件）
  */
 
 public abstract class BaseRecyclerViewAdapter<T extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<T>{

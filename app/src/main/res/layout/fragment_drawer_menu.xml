@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context="guohuayu.com.iweather.feature.homePage.drawer.DrawerMenuFragment"
+    android:background="#fff">
+
+    <include
+        layout="@layout/layout_drawer_menu_head"
+        android:layout_width="match_parent"
+        android:layout_height="120dp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_city_manager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="4dp"
+        tools:listitem="@layout/item_city_manager" />
+
+    <ImageButton
+        android:id="@+id/iBtn_addCity"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/add"
+        android:layout_gravity="center"/>
+
+</LinearLayout>

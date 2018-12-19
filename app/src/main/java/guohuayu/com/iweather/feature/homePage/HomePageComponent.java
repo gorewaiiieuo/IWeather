@@ -13,5 +13,5 @@ import guohuayu.com.iweather.di.scope.ActivityScoped;
 @Component(modules = HomePageModule.class, dependencies = ApplicationComponent.class)
 public interface HomePageComponent {
 
-    void inject(WelcomeActivity welcomeActivity);
+    void inject(MainActivity  mainActivity);
 }

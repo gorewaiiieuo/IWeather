@@ -14,14 +14,14 @@ import guohuayu.com.iweather.data.db.entities.weatherEntities.Weather;
 
 public interface DrawerContract {
     interface View extends BaseView<DrawerMenuPresenter>{
-        void displaySavedCities(List<Weather> weatherList);
+        void displaySavedCities(List<Weather> weatherList);//notify adapter
     }
 
     interface Presenter extends BasePresenter{
-        void loadSavedCities();
+        void loadSavedCities();//加载全部已保存的城市的天气信息
 
-        void deleteCity(String cityId);
+        void deleteCity(String cityId);//删除城市 同时更新当前城市
 
-        void saveCurrentCityToPreference(String cityId) throws InvalidClassException;
+        void saveCurrentCityToPreference(String cityId) throws InvalidClassException;//在此更新道歉城市到sharedPreference
     }
 }
