@@ -1,17 +1,17 @@
 package guohuayu.com.iweather.feature.homePage;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,6 +48,21 @@ public class HomePageFragment extends BaseFragment implements HomePageContract.V
     RecyclerView rv_detail;
     private DetailAdapter detailAdapter;
 
+    //未来七天预报
+    @BindView(R.id.rv_forecast)
+    RecyclerView rv_forecast;
+    private ForecastAdapter forecastAdapter;
+
+    //空气质量
+    @BindView(R.id.cv_aq)
+    CardView cv_aq;
+    @BindView(R.id.tv_AQI)
+    TextView tv_aqi;
+    @BindView(R.id.tv_primary)
+    TextView tv_advice;
+    @BindView(R.id.tv_pm25)
+    TextView tv_pm25;
+
     private LifeIndexAdapter lifeIndexAdapter;
 
     public static HomePageFragment newInstance(){
@@ -79,6 +94,17 @@ public class HomePageFragment extends BaseFragment implements HomePageContract.V
         detailAdapter = new DetailAdapter(weatherDetails);
         rv_detail.setAdapter(detailAdapter);
         detailAdapter.setOnItemClickListener((adapterView, view, i, l)->{});
+
+        //未来七天预报
+        weatherForecasts = new ArrayList<>();
+        rv_forecast.setNestedScrollingEnabled(false);
+        rv_forecast.setLayoutManager(new LinearLayoutManager(getActivity()));
+        forecastAdapter = new ForecastAdapter(weatherForecasts);
+        rv_forecast.setAdapter(forecastAdapter);
+        forecastAdapter.setOnItemClickListener((adapterView, view, i, l)->{});
+
+        //天气质量
+        cv_aq.getBackground().setAlpha(100);
 
         return rootView;
     }
@@ -113,12 +139,23 @@ public class HomePageFragment extends BaseFragment implements HomePageContract.V
 
         onFragmentInteractionListener.updateMainBarTv(weather);
 
-        //AirQuality airQuality = weather.getAirQuality();
-        //设置空气质量相关textview
+        //空气质量
+        AirQuality airQuality = weather.getAirQuality();
+        tv_aqi.setText(airQuality.getAqi()+"");
+        tv_pm25.setText(airQuality.getPm25()+"");
+        tv_advice.setText(airQuality.getPrimary().equals("无") ? "首要污染物：无" : airQuality.getPrimary());
 
         weatherDetails.clear();
         weatherDetails.addAll(createWeatherDetail(weather));
         detailAdapter.notifyDataSetChanged();
+
+        weatherForecasts.clear();
+        for(int i = 1; i < 7; i++){
+            weatherForecasts.add(weather.getWeatherForecasts().get(i));
+        }
+        System.out.println(weatherForecasts);
+        forecastAdapter.notifyDataSetChanged();
+
 //
 //        lifeIndices.clear();
 //        lifeIndices.addAll(weather.getLifeIndexes());
@@ -135,7 +172,7 @@ public class HomePageFragment extends BaseFragment implements HomePageContract.V
         WeatherDetail detail3 = new WeatherDetail(R.drawable.shidu, "相对湿度", weather.getWeatherForecasts().get(0).getHumidity()+"%");
         WeatherDetail detail4 = new WeatherDetail(R.drawable.ziwaixian, "紫外级别", weather.getWeatherForecasts().get(0).getUv());
         WeatherDetail detail5 = new WeatherDetail(R.drawable.jiangshuigailv, "降雨概率", weather.getWeatherForecasts().get(0).getPop()+"%");
-        WeatherDetail detail6 = new WeatherDetail(R.drawable.richu, "风向风力", weather.getWeatherForecasts().get(0).getWind());
+        WeatherDetail detail6 = new WeatherDetail(R.drawable.richu, "风向风力", weather.getWeatherForecasts().get(0).getWind()+"级");
 
         details.add(detail1);
         details.add(detail2);

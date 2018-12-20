@@ -157,7 +157,7 @@ public class WeatherAdapter {
     public AirQuality getAirQualityLive() {
 
         AirQuality airQualityLive = new AirQuality();
-//        airQualityLive.setAdvice("");
+//        airQualityLive.setAdvice(cityAirLiveEntity.getA);
         airQualityLive.setAqi(Integer.parseInt(cityAirLiveEntity.getAQI()));
         airQualityLive.setCityId(cityAirLiveEntity.getCitycode());
 //        airQualityLive.setCityRank("");

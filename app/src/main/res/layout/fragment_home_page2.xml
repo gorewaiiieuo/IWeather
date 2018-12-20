@@ -7,12 +7,97 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="guohuayu.com.iweather.feature.homePage.HomePageFragment"
-    tools:ignore="RtlHardcoded">
+    tools:ignore="RtlHardcoded"
+    android:background="@drawable/bg">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="#e0000000"
+            android:id="@+id/cv_aq">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:descendantFocusability="blocksDescendants">
+
+                <com.guohuayu.android.widget.TitleView
+                    android:id="@+id/aqi_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="#C0C0C0"
+                    app:titleViewText="空气质量">
+
+                </com.guohuayu.android.widget.TitleView>
+
+                <TextView
+                    android:id="@+id/tv_titleAQI"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/aqi_title"
+                    android:layout_marginLeft="35dp"
+                    android:text="AQI"
+                    android:textSize="35sp" />
+
+                <TextView
+                    android:id="@+id/tv_AQI"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/tv_titleAQI"
+                    android:layout_marginLeft="48dp"
+                    android:text="35"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/tv_titlePM25"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/aqi_title"
+                    android:layout_marginRight="45dp"
+                    android:text="PM2.5"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/tv_pm25"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/tv_titlePM25"
+                    android:layout_marginRight="75dp"
+                    android:text="34"
+                    android:textSize="25sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5px"
+                    android:background="#C0C0C0"
+                    android:layout_below="@+id/tv_AQI"
+                    android:layout_marginHorizontal="5dp"
+                    android:id="@+id/view_line"/>
+
+                <TextView
+                    android:id="@+id/tv_primary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/view_line"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="5dp"
+                    android:text="首要污染物：SO2"
+                    android:textSize="20sp" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -29,7 +114,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 app:titleViewText="详情"
-                android:background="#C0C0C0"></com.guohuayu.android.widget.TitleView>
+                android:background="#C0C0C0"
+                android:layout_marginLeft="5dp"></com.guohuayu.android.widget.TitleView>
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
@@ -44,6 +130,39 @@
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:descendantFocusability="blocksDescendants">
+
+                <com.guohuayu.android.widget.TitleView
+                    android:id="@+id/forecast_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    app:titleViewText="天气预报"
+                    android:background="#C0C0C0"
+                    android:layout_marginLeft="5dp"></com.guohuayu.android.widget.TitleView>
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rv_forecast"
+                    android:layout_below = "@+id/forecast_title"
+                    tools:listitem="@layout/item_weather_forecast"
+                    >
+
+                </android.support.v7.widget.RecyclerView>
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
 
     </LinearLayout>
 
