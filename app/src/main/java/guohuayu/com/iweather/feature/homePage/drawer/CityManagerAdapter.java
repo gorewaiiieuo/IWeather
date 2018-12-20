@@ -9,7 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.baronzhang.android.library.util.DateConvertUtils;
+import com.guohuayu.android.library.util.DateConvertUtils;
 
 import java.util.List;
 

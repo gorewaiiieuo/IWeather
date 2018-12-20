@@ -9,14 +9,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.test.ActivityUnitTestCase;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
-import com.baronzhang.android.library.util.ActivityUtils;
+import com.guohuayu.android.library.util.ActivityUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
@@ -49,8 +47,6 @@ implements HomePageFragment.OnFragmentInteractionListener, DrawerMenuFragment.On
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
 
-    @BindView(R.id.tv_city)
-    TextView tv_city;
     @BindView(R.id.tv_temp)
     TextView tv_temp;
     @BindView(R.id.tv_weather)
@@ -120,14 +116,16 @@ implements HomePageFragment.OnFragmentInteractionListener, DrawerMenuFragment.On
     public void updateMainBarTv(Weather weather) {
         currentCityId = weather.getCityId();
         smartRefreshLayout.finishRefresh();
-//        toolbar.setTitle(weather.getCityName());
-//        collapsingToolbarLayout.setTitle(weather.getCityName());
+        toolbar.setTitle(weather.getCityName());
+        collapsingToolbarLayout.setTitle(weather.getCityName());
 
-        tv_city.setText(weather.getCityName());
         tv_temp.setText(weather.getWeatherLive().getTemperature());
         tv_weather.setText(weather.getWeatherLive().getWeather());
-        tv_tempMin.setText(weather.getWeatherForecasts().get(0).getTempMin());
-        tv_tempMax.setText(weather.getWeatherForecasts().get(0).getTempMax());
+        tv_tempMin.setText(weather.getWeatherForecasts().get(0).getTempMin()+"℃");
+        tv_tempMax.setText(weather.getWeatherForecasts().get(0).getTempMax()+"℃");
+        System.out.println(weather.getCityName() + "的最低最高温度分别是" + weather.getWeatherForecasts().get(0).getTempMin()
+        + weather.getWeatherForecasts().get(0).getTempMax()+"");
+
     }
 
     @Override

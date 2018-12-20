@@ -1,6 +1,6 @@
 package guohuayu.com.iweather.data.db.entities.adapter;
 
-import com.baronzhang.android.library.util.DateConvertUtils;
+import com.guohuayu.android.library.util.DateConvertUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +66,7 @@ public class WeatherAdapter {
 
         for(WeatherForecastEntity.ForecastBean forecastBean : weatherForecastEntity.getForecast()){
             WeatherForecast weatherForecast = new WeatherForecast();
-            weatherForecast.setWind(forecastBean.getWind().getDir());
+            weatherForecast.setWind(forecastBean.getWind().getDir() + forecastBean.getWind().getSc());
             weatherForecast.setCityId(getCityId());
             weatherForecast.setHumidity(forecastBean.getHum());
             weatherForecast.setMoonrise(forecastBean.getAstro().getMr());

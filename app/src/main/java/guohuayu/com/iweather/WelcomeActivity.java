@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.baronzhang.android.library.util.system.StatusBarHelper;
+import com.guohuayu.android.library.util.system.StatusBarHelper;
 
 import java.io.InvalidClassException;
 
@@ -13,7 +13,6 @@ import guohuayu.com.iweather.data.preference.PreferenceHelper;
 import guohuayu.com.iweather.data.preference.WeatherSettings;
 import guohuayu.com.iweather.feature.homePage.MainActivity;
 import rx.Observable;
-import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 

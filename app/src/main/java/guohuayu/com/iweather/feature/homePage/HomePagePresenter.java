@@ -3,7 +3,7 @@ package guohuayu.com.iweather.feature.homePage;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.baronzhang.android.library.util.RxSchedulerUtils;
+import com.guohuayu.android.library.util.RxSchedulerUtils;
 
 import javax.inject.Inject;
 

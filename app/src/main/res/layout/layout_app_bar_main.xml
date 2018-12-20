@@ -45,8 +45,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
+                        android:layout_marginTop="20dp"
                         android:gravity="center"
-                        android:text="重庆"
+                        android:text="今天"
                         android:textColor="#fff"
                         android:textSize="55sp" />
 
@@ -69,17 +70,6 @@
                         android:textColor="@android:color/white"
                         android:textSize="20sp"
                         tools:text="小雨" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginLeft="10dp"
-                        android:text="今天"
-                        android:textSize="20sp"
-                        android:textColor="#0066FF"/>
 
                     <TextView
                         android:id="@+id/tv_tempMax"
@@ -123,7 +113,8 @@
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:background="#DCDCDC"/>
 
     </android.support.design.widget.CoordinatorLayout>
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>

@@ -3,7 +3,7 @@ package guohuayu.com.iweather.data.repository;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.baronzhang.android.library.util.NetworkUtils;
+import com.guohuayu.android.library.util.NetworkUtils;
 
 import java.sql.SQLException;
 
@@ -15,7 +15,6 @@ import guohuayu.com.iweather.data.http.entity.CityAirLiveEntity;
 import guohuayu.com.iweather.data.http.entity.WeatherForecastEntity;
 import guohuayu.com.iweather.data.http.entity.WeatherLiveEntity;
 import rx.Observable;
-import rx.Scheduler;
 import rx.exceptions.Exceptions;
 import rx.schedulers.Schedulers;
 
