@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import guohuayu.com.iweather.R;
 import guohuayu.com.iweather.base.BaseFragment;
@@ -71,8 +73,12 @@ public class DrawerMenuFragment extends BaseFragment implements DrawerContract.V
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_drawer_menu, container, false);
+
+        unbinder = ButterKnife.bind(this, rootView);
+
         Context context = rootView.getContext();
-        rv_cityManager.setLayoutManager(new LinearLayoutManager(context));
+
+        rv_cityManager.setLayoutManager(new GridLayoutManager(context,3));
         weatherList = new ArrayList<>();
         cityManagerAdapter = new CityManagerAdapter(weatherList);
         cityManagerAdapter.setOnItemClickListener(new CityManagerAdapter.OnCityManagerItemClickListener() {

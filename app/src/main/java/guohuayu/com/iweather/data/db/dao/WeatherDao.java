@@ -84,6 +84,7 @@ public class WeatherDao {
 
         for(Weather weather : weatherList){
             String cityId = weather.getCityId();
+            System.out.println("***queryAllSaveCity里的cityId" + cityId);
             weather.setWeatherLive(realtimeDaoOperation.queryForId(cityId));
             weather.setWeatherForecasts(forecastDaoOperation.queryForEq(WeatherForecast.CITY_ID_FIELD_NAME, cityId));
             weather.setLifeIndexes(lifeIndexesDaoOperation.queryForEq(WeatherForecast.CITY_ID_FIELD_NAME, cityId));

@@ -37,7 +37,7 @@ public class DrawerMenuPresenter implements DrawerContract.Presenter{
     @Inject
     public DrawerMenuPresenter(Context context, DrawerContract.View mView) {
         this.mView = mView;
-        this.subscriptions = subscriptions;
+        this.subscriptions = new CompositeSubscription();
         mView.setPresenter(this);
 
         DaggerPresenterComponent.builder()

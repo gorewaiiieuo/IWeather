@@ -108,7 +108,13 @@ implements HomePageFragment.OnFragmentInteractionListener, DrawerMenuFragment.On
         /*
         * 注入drawerMenuFragment
         * */
+        DrawerMenuFragment drawerMenuFragment = (DrawerMenuFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container_drawer_menu);
+        if(drawerMenuFragment == null){
+            drawerMenuFragment = DrawerMenuFragment.newInstance();
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), drawerMenuFragment, R.id.fragment_container_drawer_menu);
+        }
 
+        drawerMenuPresenter = new DrawerMenuPresenter(this, drawerMenuFragment);
     }
 
     //在此更新mainBar中的几个tv
@@ -123,8 +129,6 @@ implements HomePageFragment.OnFragmentInteractionListener, DrawerMenuFragment.On
         tv_weather.setText(weather.getWeatherLive().getWeather());
         tv_tempMin.setText(weather.getWeatherForecasts().get(0).getTempMin()+"℃");
         tv_tempMax.setText(weather.getWeatherForecasts().get(0).getTempMax()+"℃");
-        System.out.println(weather.getCityName() + "的最低最高温度分别是" + weather.getWeatherForecasts().get(0).getTempMin()
-        + weather.getWeatherForecasts().get(0).getTempMax()+"");
 
     }
 

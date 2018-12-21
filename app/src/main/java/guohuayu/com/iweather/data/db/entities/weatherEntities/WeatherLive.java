@@ -11,7 +11,7 @@ import java.util.WeakHashMap;
 @DatabaseTable(tableName = "WeatherLive")
 public class WeatherLive {
     //以下为sqlite数据库表中行名
-    public static final String CITY_ID_FILE_NAME = "cityId";//*****api中live实际无cityCode???
+    public static final String CITY_ID_FILE_NAME = "cityId";
     public static final String UPDATETIME_FILE_NAME = "updateTime";
     public static final String WEATHER_FILE_NAME = "weather";
     public static final String TEMPERATURE_FILE_NAME = "temperature";
@@ -27,7 +27,7 @@ public class WeatherLive {
     //以下为javabean中名字
     //指定cityID为主键，不自增长
     @DatabaseField(columnName = CITY_ID_FILE_NAME, id = true)
-    private String cityID;	//城市编号 *****api中live实际无cityCode???
+    private String cityID;
 
     @DatabaseField(columnName = UPDATETIME_FILE_NAME)
     private long updatetime;	//更新时间

@@ -43,9 +43,13 @@ public class CityManagerAdapter extends BaseRecyclerViewAdapter<CityManagerAdapt
     @Override
     public void onBindViewHolder(@NonNull CityManagerAdapter.ViewHolder holder, int position) {
         Weather weather = weatherList.get(position);
+        if(holder.city == null){
+            System.out.println("holder.city == null");
+        }else{
+            System.out.println("holder.city not null");
+        }
         holder.city.setText(weather.getCityName());
         holder.temp.setText(new StringBuilder().append(weather.getWeatherForecasts().get(0).getTempMin()).append("~").append(weather.getWeatherForecasts().get(0).getTempMax()).append("℃").toString());
-        holder.time.setText("发布于 " + DateConvertUtils.timeStampToDate(weather.getWeatherLive().getUpdatetime(), DateConvertUtils.DATA_FORMAT_PATTEN_YYYY_MM_DD_HH_MM));
 
         holder.delete.setOnClickListener(v ->{
             Weather removeWeather = weatherList.get(holder.getAdapterPosition());
@@ -80,12 +84,10 @@ public class CityManagerAdapter extends BaseRecyclerViewAdapter<CityManagerAdapt
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
-        @BindView(R.id.item_tv_city)
+        @BindView(R.id.tv_cityName)
         TextView city;
-        @BindView(R.id.item_tv_temp)
+        @BindView(R.id.tv_cityTemp)
         TextView temp;
-        @BindView(R.id.item_tv_time)
-        TextView time;
         @BindView(R.id.item_iv_weather)
         ImageView weather;
         @BindView(R.id.item_iv_delete)

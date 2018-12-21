@@ -93,7 +93,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="5dp"
                     android:text="首要污染物：SO2"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
             </RelativeLayout>
 
@@ -102,7 +102,8 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp">
+        android:layout_margin="5dp"
+        android:id="@+id/cv_detail">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -135,7 +136,8 @@
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp">
+            android:layout_margin="5dp"
+            android:id="@+id/cv_forecast">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -156,6 +158,39 @@
                     android:id="@+id/rv_forecast"
                     android:layout_below = "@+id/forecast_title"
                     tools:listitem="@layout/item_weather_forecast"
+                    >
+
+                </android.support.v7.widget.RecyclerView>
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:id="@+id/cv_index">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:descendantFocusability="blocksDescendants">
+
+                <com.guohuayu.android.widget.TitleView
+                    android:id="@+id/index_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    app:titleViewText="生活指数"
+                    android:background="#C0C0C0"
+                    android:layout_marginLeft="5dp"></com.guohuayu.android.widget.TitleView>
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rv_index"
+                    android:layout_below = "@+id/index_title"
+                    tools:listitem="@layout/item_lifeindex"
                     >
 
                 </android.support.v7.widget.RecyclerView>

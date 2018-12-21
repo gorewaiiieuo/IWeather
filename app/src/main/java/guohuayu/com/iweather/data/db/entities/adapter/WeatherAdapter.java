@@ -58,6 +58,7 @@ public class WeatherAdapter {
         weatherLive.setWindpower(weatherLiveEntity.getWindpower());
         weatherLive.setWindspeed(weatherLiveEntity.getWindspeed());
 
+        System.out.println("********weatherlive.getCityCode(): " + weatherLiveEntity.getCitycode());
         return weatherLive;
     }
 
@@ -95,61 +96,47 @@ public class WeatherAdapter {
 
         WeatherForecastEntity.SuggestionBean suggestionEntity = weatherForecastEntity.getSuggestion();
 
-        LifeIndex lifeIndex1 = new LifeIndex();
-        lifeIndex1.setCityId(weatherForecastEntity.getCitycode());
-        lifeIndex1.setName("空气质量");
-        lifeIndex1.setIndex(suggestionEntity.getAir().getBrf());
-        lifeIndex1.setDetails(suggestionEntity.getAir().getTxt());
-        lifeIndexes.add(lifeIndex1);
+        LifeIndex index1 = new LifeIndex();
+        index1.setCityId(weatherForecastEntity.getCitycode());
+        index1.setName("舒适度");
+        index1.setIndex(suggestionEntity.getComf().getBrf());
+        index1.setDetails(suggestionEntity.getComf().getTxt());
+        lifeIndexes.add(index1);
 
         LifeIndex index2 = new LifeIndex();
         index2.setCityId(weatherForecastEntity.getCitycode());
-        index2.setName("舒适度");
-        index2.setIndex(suggestionEntity.getComf().getBrf());
-        index2.setDetails(suggestionEntity.getComf().getTxt());
+        index2.setName("穿衣");
+        index2.setIndex(suggestionEntity.getDrs().getBrf());
+        index2.setDetails(suggestionEntity.getDrs().getTxt());
         lifeIndexes.add(index2);
 
         LifeIndex index3 = new LifeIndex();
         index3.setCityId(weatherForecastEntity.getCitycode());
-        index3.setName("穿衣");
-        index3.setIndex(suggestionEntity.getDrs().getBrf());
-        index3.setDetails(suggestionEntity.getDrs().getTxt());
+        index3.setName("感冒");
+        index3.setIndex(suggestionEntity.getFlu().getBrf());
+        index3.setDetails(suggestionEntity.getFlu().getTxt());
         lifeIndexes.add(index3);
 
         LifeIndex index4 = new LifeIndex();
         index4.setCityId(weatherForecastEntity.getCitycode());
-        index4.setName("感冒");
-        index4.setIndex(suggestionEntity.getFlu().getBrf());
-        index4.setDetails(suggestionEntity.getFlu().getTxt());
+        index4.setName("运动");
+        index4.setIndex(suggestionEntity.getSport().getBrf());
+        index4.setDetails(suggestionEntity.getSport().getTxt());
         lifeIndexes.add(index4);
 
         LifeIndex index5 = new LifeIndex();
         index5.setCityId(weatherForecastEntity.getCitycode());
-        index5.setName("运动");
-        index5.setIndex(suggestionEntity.getSport().getBrf());
-        index5.setDetails(suggestionEntity.getSport().getTxt());
+        index5.setName("旅游");
+        index5.setIndex(suggestionEntity.getTrav().getBrf());
+        index5.setDetails(suggestionEntity.getTrav().getTxt());
         lifeIndexes.add(index5);
 
         LifeIndex index6 = new LifeIndex();
         index6.setCityId(weatherForecastEntity.getCitycode());
-        index6.setName("旅游");
-        index6.setIndex(suggestionEntity.getTrav().getBrf());
-        index6.setDetails(suggestionEntity.getTrav().getTxt());
+        index6.setName("洗车");
+        index6.setIndex(suggestionEntity.getCw().getBrf());
+        index6.setDetails(suggestionEntity.getCw().getTxt());
         lifeIndexes.add(index6);
-
-        LifeIndex index7 = new LifeIndex();
-        index7.setCityId(weatherForecastEntity.getCitycode());
-        index7.setName("紫外线");
-        index7.setIndex(suggestionEntity.getUv().getBrf());
-        index7.setDetails(suggestionEntity.getUv().getTxt());
-        lifeIndexes.add(index7);
-
-        LifeIndex index8 = new LifeIndex();
-        index8.setCityId(weatherForecastEntity.getCitycode());
-        index8.setName("洗车");
-        index8.setIndex(suggestionEntity.getCw().getBrf());
-        index8.setDetails(suggestionEntity.getCw().getTxt());
-        lifeIndexes.add(index8);
 
         return lifeIndexes;
     }

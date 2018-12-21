@@ -16,19 +16,19 @@ import butterknife.ButterKnife;
 import guohuayu.com.iweather.R;
 import guohuayu.com.iweather.base.BaseRecyclerViewAdapter;
 import guohuayu.com.iweather.data.WeatherDetail;
-import guohuayu.com.iweather.data.db.dao.WeatherDao;
 
 /**
  * Created by Administrator on 2018/12/17.
- * 未实现 未实现 未实现
  * 用于完成显示今天的天气详情 风力 湿度 紫外线指数 降水概率 日出 日落时间 的recyclerView
  */
 
 public class DetailAdapter extends BaseRecyclerViewAdapter<DetailAdapter.ViewHolder>{
     private List<WeatherDetail> details;
+    private Context context;
 
-    public DetailAdapter( List<WeatherDetail> details){
+    public DetailAdapter(List<WeatherDetail> details, Context context){
         this.details = details;
+        this.context = context;
     }
 
     @NonNull
