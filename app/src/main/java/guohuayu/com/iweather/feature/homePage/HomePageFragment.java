@@ -12,6 +12,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,9 +76,12 @@ public class HomePageFragment extends BaseFragment implements HomePageContract.V
     TextView tv_aqi;
     @BindView(R.id.tv_primary)
     TextView tv_advice;
-    @BindView(R.id.tv_pm25)
-    TextView tv_pm25;
+    @BindView(R.id.tv_level)
+    TextView tv_level;
     AirQuality airQuality;
+    @BindView(R.id.mHorizontalBarChart)
+    BarChart mHorizontalBarChart;
+    private float[] fAirQuality;
 
     //生活指数
     @BindView(R.id.rv_index)
@@ -126,23 +140,117 @@ public class HomePageFragment extends BaseFragment implements HomePageContract.V
 
         //空气质量 展开收起
         airQuality = new AirQuality();
-        cv_aq.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //施工到此
-                String[] airQuality = new String[]{weather.getAirQuality().getCo(),weather.getAirQuality().getSo2(),weather.getAirQuality().getNo2(),
-                        weather.getAirQuality().getO3(), weather.getAirQuality().getPm25()+"", weather.getAirQuality().getPm10()+""};
-                Bundle bundle = new Bundle();
-                bundle.putStringArray("airQuality",airQuality);
-                System.out.println(weather.getAirQuality().getCo());
-            }
-        });
+        fAirQuality = new float[6];
 
         //背景设置半透明
         cv_aq.getBackground().setAlpha(150);
         cv_forecast.getBackground().setAlpha(150);
 
         return rootView;
+    }
+
+    private void setHorizonBarChat() {
+        //设置相关属性\
+        mHorizontalBarChart.setTouchEnabled(false);
+        mHorizontalBarChart.setDrawBarShadow(false);
+        mHorizontalBarChart.setDrawValueAboveBar(true);
+//        mHorizontalBarChart.getDescription().setEnabled(false);
+        mHorizontalBarChart.setMaxVisibleValueCount(60);
+        mHorizontalBarChart.setPinchZoom(true);
+        mHorizontalBarChart.setDrawGridBackground(false);
+
+        //x轴
+        XAxis xl = mHorizontalBarChart.getXAxis();
+        xl.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xl.setDrawAxisLine(true);
+        xl.setDrawGridLines(false);
+        xl.setGranularity(10f);
+        List<String> str = new ArrayList<>();
+        str.add("CO浓度");
+        str.add("SO2浓度");
+        str.add("NO2浓度");
+        str.add("O3浓度");
+        str.add("Pm25浓度");
+        str.add("Pm10浓度");
+        xl.setValueFormatter(new MyXFormatter(str));
+
+        //y轴
+        YAxis yl = mHorizontalBarChart.getAxisLeft();
+        yl.setDrawAxisLine(true);
+        yl.setDrawGridLines(true);
+        yl.setAxisMinimum(0f);
+
+        //y轴
+        YAxis yr = mHorizontalBarChart.getAxisRight();
+        yr.setDrawAxisLine(true);
+        yr.setDrawGridLines(false);
+        yr.setAxisMinimum(0f);
+
+        //设置数据
+        setData(fAirQuality);
+        mHorizontalBarChart.setFitBars(true);
+        mHorizontalBarChart.animateY(2500);
+
+        Legend l = mHorizontalBarChart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        l.setDrawInside(false);
+        l.setFormSize(8f);
+        l.setXEntrySpace(4f);
+    }
+
+    private void setData(float[] aqi) {
+        float barWidth = 1f;
+        float spaceForBar = 10f;
+        int count = aqi.length;
+        ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
+        for (int i = 0; i < count; i++) {
+            float val = aqi[i];
+            yVals1.add(new BarEntry(i * spaceForBar, val));
+        }
+        BarDataSet set1;
+        if (mHorizontalBarChart.getData() != null &&
+                mHorizontalBarChart.getData().getDataSetCount() > 0) {
+            set1 = (BarDataSet) mHorizontalBarChart.getData().getDataSetByIndex(0);
+            set1.setValues(yVals1);
+            mHorizontalBarChart.getData().notifyDataChanged();
+            mHorizontalBarChart.notifyDataSetChanged();
+        } else {
+            set1 = new BarDataSet(yVals1, "          空气质量指数(mg/m3)");
+
+            ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
+            dataSets.add(set1);
+
+            BarData data = new BarData(dataSets);
+            data.setValueTextSize(10f);
+            data.setBarWidth(barWidth);
+            mHorizontalBarChart.setData(data);
+        }
+    }
+
+    class MyXFormatter implements IAxisValueFormatter
+    {
+        private List<String> mValues;
+
+        public MyXFormatter(List<String> values)
+        {
+            this.mValues = values;
+        }
+
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+            System.out.println((int)value+"******");
+            if(((int)value >=0 && (int)(value/10) < mValues.size()))
+                return mValues.get((int) (value/10));
+            else
+                return "";
+        }
+
+        @Override
+        public int getDecimalDigits() {
+            return mValues.size();
+        }
     }
 
     @Override
@@ -173,13 +281,21 @@ public class HomePageFragment extends BaseFragment implements HomePageContract.V
     public void displayWeatherInformation(Weather weather) {
         this.weather = weather;
 
+
+
         onFragmentInteractionListener.updateMainBarTv(weather);
 
         //空气质量
         AirQuality airQuality = weather.getAirQuality();
         tv_aqi.setText(airQuality.getAqi()+"");
-        tv_pm25.setText(airQuality.getPm25()+"");
+        tv_level.setText(getLevel(airQuality.getAqi()));
         tv_advice.setText(airQuality.getPrimary().equals("无") ? "首要污染物：无" : "首要污染物： " + airQuality.getPrimary());
+
+        fAirQuality = new float[]{Float.parseFloat(airQuality.getCo()), Float.parseFloat(airQuality.getSo2()),
+                Float.parseFloat(airQuality.getNo2()), Float.parseFloat(airQuality.getO3())
+                , airQuality.getPm25(), airQuality.getPm10()};
+        setHorizonBarChat();
+
 
         weatherDetails.clear();
         weatherDetails.addAll(createWeatherDetail(weather));
@@ -198,6 +314,22 @@ public class HomePageFragment extends BaseFragment implements HomePageContract.V
         airQuality = weather.getAirQuality();
 
         onFragmentInteractionListener.addOrUpdateCityListInDrawerMenu(weather);
+    }
+
+    private String getLevel(int aqi) {
+        if(aqi <=50){
+            return "优";
+        }else if(aqi <= 100){
+            return "良好";
+        }else if(aqi <= 150){
+            return "轻度污染";
+        }else if(aqi <= 200){
+            return "重度污染";
+        }else if(aqi <= 300){
+            return "重度污染";
+        }else {
+            return "严重污染";
+        }
     }
 
     private List<WeatherDetail> createWeatherDetail(Weather weather) {
@@ -219,14 +351,6 @@ public class HomePageFragment extends BaseFragment implements HomePageContract.V
 
         return details;
     }
-
-//    private List<WeatherDetail> createWeatherDetail(Weather weather) {
-//        List<WeatherDetail> details = new ArrayList<>();
-//
-//        details.add(new WeatherDetail())
-//    }
-
-
 
     public interface OnFragmentInteractionListener {
         /*

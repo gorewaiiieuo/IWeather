@@ -53,7 +53,7 @@ dependencies {
 
     implementation rootProject.ext.dependencies["retrofit2-fastjson-converter"]
 
-
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.0'
 }
 
 //

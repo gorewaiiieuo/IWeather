@@ -6,4 +6,7 @@
     <string name="title_activity_select_city">SelectCityActivity</string>
     <string name="drawer_open">打开侧滑菜单</string>
     <string name="drawer_close">收起侧滑菜单</string>
+    <string name="title_activity_air_quality_display">AirQualityDisplayActivity</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>
