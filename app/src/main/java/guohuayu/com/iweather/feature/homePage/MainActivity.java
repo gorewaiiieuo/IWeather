@@ -110,7 +110,7 @@ implements HomePageFragment.OnFragmentInteractionListener, DrawerMenuFragment.On
         * */
         DrawerMenuFragment drawerMenuFragment = (DrawerMenuFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container_drawer_menu);
         if(drawerMenuFragment == null){
-            drawerMenuFragment = DrawerMenuFragment.newInstance();
+            drawerMenuFragment = DrawerMenuFragment.newInstance(1);
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), drawerMenuFragment, R.id.fragment_container_drawer_menu);
         }
 

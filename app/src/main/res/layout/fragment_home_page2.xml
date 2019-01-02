@@ -116,7 +116,7 @@
                 android:layout_height="35dp"
                 app:titleViewText="详情"
                 android:background="#C0C0C0"
-                android:layout_marginLeft="5dp"></com.guohuayu.android.widget.TitleView>
+                android:layout_marginLeft="5dp"> </com.guohuayu.android.widget.TitleView>
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
@@ -150,7 +150,7 @@
                     android:layout_height="35dp"
                     app:titleViewText="天气预报"
                     android:background="#C0C0C0"
-                    android:layout_marginLeft="5dp"></com.guohuayu.android.widget.TitleView>
+                    android:layout_marginLeft="5dp"> </com.guohuayu.android.widget.TitleView>
 
                 <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"

@@ -20,12 +20,6 @@
         android:layout_margin="4dp"
         tools:listitem="@layout/item_city_manager" />
 
-    <ImageButton
-        android:id="@+id/iBtn_addCity"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:scaleType="centerInside"
-        app:srcCompat="@drawable/add"
-        android:layout_gravity="center"/>
+
 
 </LinearLayout>
