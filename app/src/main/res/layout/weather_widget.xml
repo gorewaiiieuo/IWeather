@@ -1,43 +1,138 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#09C"
-    android:padding="@dimen/widget_margin">
+    android:padding="@dimen/widget_margin"
+    android:id="@+id/widget_weather">
 
-    <ImageView
-        android:id="@+id/widget_weatherIcon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        app:srcCompat="@drawable/qing" />
-
-    <TextView
-        android:id="@+id/widget_City"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="47dp"
-        android:layout_marginStart="47dp"
-        android:layout_marginTop="32dp"
-        android:layout_toEndOf="@+id/widget_weatherIcon"
-        android:layout_toRightOf="@+id/widget_weatherIcon"
-        android:text="中山"
-        android:textSize="25sp"
-        android:textColor="#000"/>
+        android:background="#aa99ffff">
 
-    <TextView
-        android:id="@+id/widget_temp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/widget_City"
-        android:layout_marginLeft="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_toEndOf="@+id/widget_City"
-        android:layout_toRightOf="@+id/widget_City"
-        android:text="26~30℃"
-        android:textSize="25sp"
-        android:textColor="#000"/>
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/widget_weatherIcon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            app:srcCompat="@drawable/qing" />
+
+        <TextView
+            android:id="@+id/widget_City"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="24dp"
+            android:layout_toEndOf="@+id/widget_weatherIcon"
+            android:layout_toRightOf="@+id/widget_weatherIcon"
+            android:text="中山"
+            android:textColor="#000"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/widget_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/widget_City"
+            android:layout_marginLeft="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_toEndOf="@+id/widget_City"
+            android:layout_toRightOf="@+id/widget_City"
+            android:text="26~30℃"
+            android:textColor="#000"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#50ffcccc">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="湿度: "
+                android:textSize="16sp"
+                android:textColor="#000"/>
+            <TextView
+                android:id="@+id/widget_wet"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textSize="16sp"
+                android:textColor="#000"
+                android:textStyle="italic"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="紫外线: "
+                android:textColor="#000"
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/widget_uv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textSize="16sp"
+                android:textColor="#000"
+                android:textStyle="italic"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="风力: "
+                android:textSize="16sp"
+                android:textColor="#000"/>
+            <TextView
+                android:id="@+id/widget_wind"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textSize="16sp"
+                android:textColor="#000"
+                android:textStyle="italic"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="PM2.5: "
+                android:textColor="#000"
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/widget_pm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textSize="16sp"
+                android:textColor="#000"
+                android:textStyle="italic"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
