@@ -23,7 +23,8 @@ import retrofit2.http.GET;
  * Created by Administrator on 2018/12/12.
  */
 
-public final class CityDatabaseHelper extends OrmLiteSqliteOpenHelper{
+public final class CityDatabaseHelper extends OrmLiteSqliteOpenHelper {
+
     private static final String TAG = "CityDatabaseHelper";
 
     private static final String DATABASE_NAME = "city.db";
@@ -31,12 +32,13 @@ public final class CityDatabaseHelper extends OrmLiteSqliteOpenHelper{
 
     private static volatile CityDatabaseHelper instance;
 
-    public CityDatabaseHelper(Context context){
+    public CityDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
+
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
-        //由于城市数据库是由外部资源res.raw导入的，故不需要创建执行创建表的操作
+        //由于城市数据库是由外部导入的，故不需要创建执行创建表的操作
     }
 
     @Override
@@ -44,15 +46,18 @@ public final class CityDatabaseHelper extends OrmLiteSqliteOpenHelper{
 
     }
 
-    /*
-    * 单例获取openhelper实例
-    * */
+    /**
+     * 单例获取OpenHelper实例
+     *
+     * @param context application context
+     * @return instance
+     */
+    public static CityDatabaseHelper getInstance(Context context) {
 
-    public static CityDatabaseHelper getInstance(Context context){
         context = context.getApplicationContext();
-        if(context == null){
-            synchronized (CityDatabaseHelper.class){
-                if(instance == null){
+        if (instance == null) {
+            synchronized (CityDatabaseHelper.class) {
+                if (instance == null) {
                     instance = new CityDatabaseHelper(context);
                 }
             }
@@ -60,48 +65,51 @@ public final class CityDatabaseHelper extends OrmLiteSqliteOpenHelper{
         return instance;
     }
 
-    //清除缓存
     @Override
     public void close() {
         super.close();
         DaoManager.clearCache();
     }
 
-    public <D extends Dao<T, ?>, T> D getCityDao(Class<T> clazz){
-        try{
+    public <D extends Dao<T, ?>, T> D getCityDao(Class<T> clazz) {
+        try {
             return getDao(clazz);
-        }catch (SQLException e){
+        } catch (SQLException e) {
             Log.e(TAG, e.getMessage());
         }
         return null;
     }
 
-    /*
-    *  导入城市数据库
-    * */
-    public static void importCityDB(){
-        //判断城市数据库文件是否存在
+    /**
+     * 导入城市数据库
+     */
+    public static void importCityDB() {
+
+        // 判断保持城市的数据库文件是否存在
         File file = new File(WeatherApplication.getInstance().getDatabasePath(DATABASE_NAME).getAbsolutePath());
-        if(!file.exists()){
-            File dbfile = WeatherApplication.getInstance().getDatabasePath(DATABASE_NAME);
+        if (!file.exists()) {// 如果不存在，则导入数据库文件
+            //数据库文件
+            File dbFile = WeatherApplication.getInstance().getDatabasePath(DATABASE_NAME);
             try {
-                if(!dbfile.getParentFile().exists()){
-                    dbfile.getParentFile().mkdir();
+                if (!dbFile.getParentFile().exists()) {
+                    dbFile.getParentFile().mkdir();
                 }
-                if(!dbfile.exists()){
-                    dbfile.createNewFile();
+                if (!dbFile.exists()) {
+                    dbFile.createNewFile();
                 }
-                //加载城市数据库
+                //加载欲导入的数据库
                 InputStream is = WeatherApplication.getInstance().getResources().openRawResource(R.raw.city);
-                FileOutputStream fos = new FileOutputStream(dbfile);
+                FileOutputStream fos = new FileOutputStream(dbFile);
                 byte[] buffer = new byte[is.available()];
-                is.read(buffer);  //is,read
-                fos.write(buffer);//fos.write
+                is.read(buffer);
+                fos.write(buffer);
                 is.close();
                 fos.close();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 }
+

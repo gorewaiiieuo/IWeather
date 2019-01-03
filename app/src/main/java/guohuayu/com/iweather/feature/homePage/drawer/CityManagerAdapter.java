@@ -49,6 +49,7 @@ public class CityManagerAdapter extends BaseRecyclerViewAdapter<CityManagerAdapt
             System.out.println("holder.city not null");
         }
         holder.city.setText(weather.getCityName());
+
         holder.temp.setText(new StringBuilder().append(weather.getWeatherForecasts().get(0).getTempMin()).append("~").append(weather.getWeatherForecasts().get(0).getTempMax()).append("℃").toString());
 
         holder.delete.setOnClickListener(v ->{
@@ -92,6 +93,11 @@ public class CityManagerAdapter extends BaseRecyclerViewAdapter<CityManagerAdapt
         ImageView weather;
         @BindView(R.id.item_iv_delete)
         ImageView delete;
+
+        @BindView(R.id.item_tv_publishTime)
+        TextView publishTime;
+
+
 
         public ViewHolder(View itemView, CityManagerAdapter adapter) {
             super(itemView);
