@@ -1,6 +1,7 @@
 package guohuayu.com.iweather.feature.homePage;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
@@ -54,6 +55,8 @@ public class HomePageFragment extends BaseFragment implements HomePageContract.V
     private OnFragmentInteractionListener onFragmentInteractionListener;
 
     private HomePageContract.Presenter presenter;
+
+    private static final String STATICATION = "guohuayu.com.iweather.WeatherWidget.weatherWidget";
 
     //天气详情
     @BindView(R.id.rv_detail)
@@ -282,7 +285,6 @@ public class HomePageFragment extends BaseFragment implements HomePageContract.V
         this.weather = weather;
 
 
-
         onFragmentInteractionListener.updateMainBarTv(weather);
 
         //空气质量
@@ -314,6 +316,19 @@ public class HomePageFragment extends BaseFragment implements HomePageContract.V
         airQuality = weather.getAirQuality();
 
         onFragmentInteractionListener.addOrUpdateCityListInDrawerMenu(weather);
+
+        //广播传递消息到桌面控件
+        Intent intent = new Intent(STATICATION);
+        Bundle bundle = new Bundle();
+        bundle.putString("city",weather.getCityName());
+        bundle.putString("temp",weatherForecasts.get(0).getTempMin()+"~"+weatherForecasts.get(0).getTempMax()+"℃");
+        bundle.putString("weather",weather.getWeatherLive().getWeather());
+        bundle.putString("wet",weather.getWeatherForecasts().get(0).getHumidity()+"%");
+        bundle.putString("uv",weather.getWeatherForecasts().get(0).getUv());
+        bundle.putString("wind",weather.getWeatherForecasts().get(0).getWind()+"级");
+        bundle.putString("pm2.5",weather.getAirQuality().getPm25()+"μg/m³");
+        intent.putExtras(bundle);
+        this.getView().getContext().sendBroadcast(intent);
     }
 
     private String getLevel(int aqi) {
