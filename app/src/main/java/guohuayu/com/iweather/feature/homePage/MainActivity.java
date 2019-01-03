@@ -124,7 +124,7 @@ implements HomePageFragment.OnFragmentInteractionListener, DrawerMenuFragment.On
         smartRefreshLayout.finishRefresh();
         toolbar.setTitle(weather.getCityName());
         collapsingToolbarLayout.setTitle(weather.getCityName());
-        
+
         tv_temp.setText(weather.getWeatherLive().getTemperature()+"°");
 
         tv_weather.setText(weather.getWeatherLive().getWeather());
