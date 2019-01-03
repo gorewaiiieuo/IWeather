@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import guohuayu.com.iweather.data.db.dao.CityDao;
 import guohuayu.com.iweather.di.component.DaggerPresenterComponent;
 import guohuayu.com.iweather.di.module.ApplicationModule;
+import guohuayu.com.iweather.di.scope.ActivityScoped;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -17,7 +18,9 @@ import rx.subscriptions.CompositeSubscription;
  * Created by Administrator on 2018/12/17.
  */
 
-public class SelectCityPresenter implements SelectCityContract.Presenter{
+@ActivityScoped
+public final class SelectCityPresenter implements SelectCityContract.Presenter {
+
     private final SelectCityContract.View cityListView;
 
     private CompositeSubscription subscriptions;
@@ -35,6 +38,8 @@ public class SelectCityPresenter implements SelectCityContract.Presenter{
         DaggerPresenterComponent.builder()
                 .applicationModule(new ApplicationModule(context))
                 .build().inject(this);
+
+
     }
 
     @Override

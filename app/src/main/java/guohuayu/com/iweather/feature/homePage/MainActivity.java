@@ -110,7 +110,7 @@ implements HomePageFragment.OnFragmentInteractionListener, DrawerMenuFragment.On
         * */
         DrawerMenuFragment drawerMenuFragment = (DrawerMenuFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container_drawer_menu);
         if(drawerMenuFragment == null){
-            drawerMenuFragment = DrawerMenuFragment.newInstance();
+            drawerMenuFragment = DrawerMenuFragment.newInstance(1);
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), drawerMenuFragment, R.id.fragment_container_drawer_menu);
         }
 
@@ -124,8 +124,9 @@ implements HomePageFragment.OnFragmentInteractionListener, DrawerMenuFragment.On
         smartRefreshLayout.finishRefresh();
         toolbar.setTitle(weather.getCityName());
         collapsingToolbarLayout.setTitle(weather.getCityName());
+        
+        tv_temp.setText(weather.getWeatherLive().getTemperature()+"°");
 
-        tv_temp.setText(weather.getWeatherLive().getTemperature()+"℃");
         tv_weather.setText(weather.getWeatherLive().getWeather());
         tv_tempMin.setText(weather.getWeatherForecasts().get(0).getTempMin()+"℃");
         tv_tempMax.setText(weather.getWeatherForecasts().get(0).getTempMax()+"℃");

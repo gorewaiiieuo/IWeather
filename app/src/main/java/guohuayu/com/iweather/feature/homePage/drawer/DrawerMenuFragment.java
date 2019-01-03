@@ -1,9 +1,11 @@
 package guohuayu.com.iweather.feature.homePage.drawer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,10 +21,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import guohuayu.com.iweather.R;
 import guohuayu.com.iweather.base.BaseFragment;
 import guohuayu.com.iweather.data.db.entities.weatherEntities.Weather;
+import guohuayu.com.iweather.feature.selectCity.SelectCityActivity;
 
 /**
  * Created by Administrator on 2018/12/17.
@@ -31,12 +35,16 @@ import guohuayu.com.iweather.data.db.entities.weatherEntities.Weather;
 
 public class DrawerMenuFragment extends BaseFragment implements DrawerContract.View{
 
-    @BindView(R.id.iBtn_addCity)
+    private static final String ARG_COLUMN_COUNT = "column-count";
+
+    @BindView(R.id.btn_addCity)
     ImageButton btn_addCity;
+
     @BindView(R.id.rv_city_manager)
     RecyclerView rv_cityManager;
 
     private Unbinder unbinder;
+    private int columnCount = 3;
 
     private List<Weather> weatherList;
     private CityManagerAdapter cityManagerAdapter;
@@ -49,8 +57,14 @@ public class DrawerMenuFragment extends BaseFragment implements DrawerContract.V
 
     }
 
-    public static DrawerMenuFragment newInstance(){
-        return new DrawerMenuFragment();
+    public static DrawerMenuFragment newInstance(int columnCount){
+
+
+        DrawerMenuFragment fragment = new DrawerMenuFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_COLUMN_COUNT, columnCount);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -67,6 +81,10 @@ public class DrawerMenuFragment extends BaseFragment implements DrawerContract.V
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            columnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+        }
     }
 
     @Nullable
@@ -78,7 +96,13 @@ public class DrawerMenuFragment extends BaseFragment implements DrawerContract.V
 
         Context context = rootView.getContext();
 
-        rv_cityManager.setLayoutManager(new GridLayoutManager(context,3));
+
+        if (columnCount <= 1) {
+            rv_cityManager.setLayoutManager(new LinearLayoutManager(context));
+        } else {
+            rv_cityManager.setLayoutManager(new GridLayoutManager(context, columnCount));
+        }
+        rv_cityManager.setItemAnimator(new DefaultItemAnimator());
         weatherList = new ArrayList<>();
         cityManagerAdapter = new CityManagerAdapter(weatherList);
         cityManagerAdapter.setOnItemClickListener(new CityManagerAdapter.OnCityManagerItemClickListener() {
@@ -130,6 +154,13 @@ public class DrawerMenuFragment extends BaseFragment implements DrawerContract.V
     /*
     * 用于实现在城市管理列表中选中城市后，将对应城市的天气信息加载到主界面
     * */
+
+    @OnClick(R.id.btn_addCity)
+    void onAddCityClick() {
+        Intent intent = new Intent(getActivity(), SelectCityActivity.class);
+        startActivity(intent);
+    }
+
     public interface OnSelectCity{
         void onSelect(String cityId);
     }
